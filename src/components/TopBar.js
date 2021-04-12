@@ -1,8 +1,79 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Dropdown, Grid, Form } from "semantic-ui-react";
 import { CategoryContext } from "../contexts/CategoryContext";
 import { MonthContext } from "../contexts/MonthContext";
+
+const handleMonthNames = (monthDropdown, i) => {
+  switch (i) {
+    case 1:
+      monthDropdown.text = "January";
+      break;
+    case 2:
+      monthDropdown.text = "February";
+      break;
+    case 3:
+      monthDropdown.text = "March";
+      break;
+    case 4:
+      monthDropdown.text = "April";
+      break;
+    case 5:
+      monthDropdown.text = "May";
+      break;
+    case 6:
+      monthDropdown.text = "June";
+      break;
+    case 7:
+      monthDropdown.text = "July";
+      break;
+    case 8:
+      monthDropdown.text = "August";
+      break;
+    case 9:
+      monthDropdown.text = "September";
+      break;
+    case 10:
+      monthDropdown.text = "October";
+      break;
+    case 11:
+      monthDropdown.text = "November";
+      break;
+    case 12:
+      monthDropdown.text = "December";
+      break;
+    default:
+    // do nothing
+  }
+};
+
+const handleCurrenToNextYearMonths = (currentMonth) => {
+  const monthsCurrentToNextYear = [];
+  for (let i = currentMonth; i < currentMonth + 12; i++) {
+    let monthDropdown = {
+      key: "",
+      text: "",
+      value: "",
+    };
+
+    if (i < 10) {
+      monthDropdown.value = `0${i}`;
+      monthDropdown.key = `${i}`;
+      handleMonthNames(monthDropdown, i);
+    } else if (i >= 10 && i <= 12) {
+      monthDropdown.value = `${i}`;
+      monthDropdown.key = `${i}`;
+      handleMonthNames(monthDropdown, i);
+    } else if (i > 12) {
+      monthDropdown.key = `${i - 12}`;
+      monthDropdown.value = `0${i - 12}`;
+      handleMonthNames(monthDropdown, i - 12);
+    }
+
+    monthsCurrentToNextYear.push(monthDropdown);
+  }
+  return monthsCurrentToNextYear;
+};
 
 function TopBar() {
   const categories = [
@@ -15,21 +86,10 @@ function TopBar() {
     { key: "c7", text: "c7", value: "c7" },
   ];
 
-  const [months] = useState([
-    { key: "1", text: "January", value: "01" },
-    { key: "2", text: "February", value: "02" },
-    { key: "3", text: "March", value: "03" },
-    { key: "4", text: "April", value: "04" },
-    { key: "5", text: "May", value: "05" },
-    { key: "6", text: "June", value: "06" },
-    { key: "7", text: "July", value: "07" },
-    { key: "8", text: "August", value: "08" },
-    { key: "9", text: "September", value: "09" },
-    { key: "10", text: "October", value: "10" },
-    { key: "11", text: "November", value: "11" },
-    { key: "12", text: "December", value: "12" },
-  ]);
+  const date = new Date();
+  const currentMonth = date.getMonth() + 1;
 
+  const months = handleCurrenToNextYearMonths(currentMonth);
   const [selectedCategories, setSelectedCategories] = useContext(
     CategoryContext
   );
@@ -61,7 +121,7 @@ function TopBar() {
               search
               selection
               options={months}
-              placeholder="Select month"
+              placeholder="Select start date"
               name="month"
               value={selectedMonth}
               onChange={(e, { value }) => {

@@ -11,7 +11,7 @@ import WorkoutDetail from "./components/WorkoutDetail";
 import Pages from "./components/Pages";
 import TopBar from "./components/TopBar";
 import NotFound from "./components/NotFound";
-import { Header } from "semantic-ui-react";
+import { Header, Dimmer, Loader } from "semantic-ui-react";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,7 +55,16 @@ function App() {
   const indexOfLastItem = currentPage * itemPerPage;
   const indexOfFirstItem = indexOfLastItem - itemPerPage;
   const currentItem = filteredWorkouts.slice(indexOfFirstItem, indexOfLastItem);
+
   const handlePaginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (workouts.length === 0) {
+    return (
+      <Dimmer active inverted>
+        <Loader>Loading</Loader>
+      </Dimmer>
+    );
+  }
 
   return (
     <Router>
@@ -76,6 +85,11 @@ function App() {
                     itemPerPage={itemPerPage}
                     totalItems={filteredWorkouts.length}
                     handlePaginate={handlePaginate}
+                    isDisplay={
+                      currentItem.length < 20 && currentPage === 1
+                        ? "none"
+                        : "flex"
+                    }
                   />
                 </>
               )}

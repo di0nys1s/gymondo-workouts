@@ -28,13 +28,10 @@ function WorkoutDetail() {
           <h3>Description: {workout.description}</h3>
         </Segment>
         <Segment>
-          <h3>Category: {workout.category}</h3>
-        </Segment>
-        <Segment>
           <h3>Start Date: {workout.startDate}</h3>
         </Segment>
         <Segment>
-          <h3>Description: {workout.description}</h3>
+          <h3>Category: {workout.category}</h3>
         </Segment>
       </Segment>
       <Link to="/">
