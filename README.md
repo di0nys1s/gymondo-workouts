@@ -1,3 +1,7 @@
+# Gymondo Workouts
+
+Please run `npm run server` to start the json-server
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
