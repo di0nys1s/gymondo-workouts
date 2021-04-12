@@ -11,7 +11,7 @@ function WorkoutList({ workouts }) {
           </Link>
         ))
       ) : (
-        <h3>Click to reveal</h3>
+        <h4>No workouts</h4>
       )}
     </div>
   );
